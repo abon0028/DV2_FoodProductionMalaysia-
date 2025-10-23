@@ -1,0 +1,60 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "title": {
+    "text": "Malaysia’s Total Crop Production Over Time (2017–2022)",
+    "fontSize": 18,
+    "fontWeight": "bold",
+    "anchor": "start",
+    "color": "#b30059"
+  },
+  "width": "container",
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/abon0028/DV2_FoodProductionMalaysia-/main/crops_state.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "aggregate": [
+        {"op": "sum", "field": "production", "as": "TotalProduction"}
+      ],
+      "groupby": ["date"]
+    },
+    {"calculate": "year(datum.date)", "as": "Year"},
+    {"filter": "datum.Year >= 2017"}
+  ],
+  "mark": {
+    "type": "line",
+    "point": {"filled": true, "size": 60, "color": "#ff66a3"},
+    "color": "#cc3366",
+    "strokeWidth": 3
+  },
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "ordinal",
+      "title": "Year",
+      "axis": {"labelAngle": 0, "labelColor": "#660033"}
+    },
+    "y": {
+      "field": "TotalProduction",
+      "type": "quantitative",
+      "title": "Total Crop Production (Metric Tonnes)",
+      "axis": {"labelColor": "#660033"}
+    },
+    "tooltip": [
+      {"field": "Year", "title": "Year"},
+      {
+        "field": "TotalProduction",
+        "title": "Total Production (t)",
+        "format": ",.0f"
+      }
+    ]
+  },
+  "config": {
+    "background": "#ffffff",
+    "view": {"stroke": "transparent"},
+    "title": {"font": "Segoe UI"},
+    "axis": {"titleColor": "#b30059", "labelFont": "Segoe UI"}
+  }
+}
