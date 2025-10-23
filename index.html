@@ -116,10 +116,11 @@
       <div id="importmap" class="chart"></div>
     </section>
 
+    <!-- 🌾 New horizontal bar chart section -->
     <section>
       <h2>7. Crop Share of Total Production (2022)</h2>
-      <p>This pie chart highlights which crop types dominate Malaysia’s total production in 2022.</p>
-      <div id="pie" class="chart"></div>
+      <p>This horizontal bar chart shows Malaysia’s crop types ranked by their share of total production in 2022, using a √ scale for better visibility of smaller crops.</p>
+      <div id="bar" class="chart"></div>
     </section>
 
     <section>
@@ -142,7 +143,7 @@
     vegaEmbed('#scatter', base + 'scatter.json', { actions: false }).catch(console.error);
     vegaEmbed('#multiline', base + 'multiline.json', { actions: false }).catch(console.error);
     vegaEmbed('#importmap', base + 'import_map.json', { actions: false }).catch(console.error);
-    vegaEmbed('#pie', base + 'pie.json', { actions: false }).catch(console.error);
+    vegaEmbed('#bar', base + 'horizontal_bar.json', { actions: false }).catch(console.error);
     vegaEmbed('#area', base + 'area.json', { actions: false }).catch(console.error);
   </script>
 </body>
