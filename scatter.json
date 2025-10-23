@@ -1,0 +1,88 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "title": {
+    "text": "Crop Efficiency: Planted Area vs Production (2022)",
+    "fontSize": 18,
+    "fontWeight": "bold",
+    "anchor": "start",
+    "color": "#b30059"
+  },
+  "width": "container",
+  "height": 500,
+  "data": {
+    "url": "https://raw.githubusercontent.com/abon0028/DV2_FoodProductionMalaysia-/main/crops_state.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"calculate": "year(datum.date)", "as": "Year"},
+    {"filter": "datum.Year == 2022"}
+  ],
+  "mark": {
+    "type": "circle",
+    "filled": true,
+    "opacity": 0.8,
+    "stroke": "#cf3a3a",
+    "strokeWidth": 0.7
+  },
+  "encoding": {
+    "x": {
+      "field": "planted_area",
+      "type": "quantitative",
+      "title": "Planted Area (Hectares)",
+      "scale": {"zero": false, "nice": true, "padding": 25},
+      "axis": {
+        "labelColor": "#660033",
+        "grid": true,
+        "gridColor": "#f2cce0",
+        "domain": true,
+        "domainColor": "#b30059",
+        "ticks": true,
+        "tickColor": "#b30059",
+        "titleColor": "#b30059",
+        "titlePadding": 8
+      }
+    },
+    "y": {
+      "field": "production",
+      "type": "quantitative",
+      "title": "Production (Metric Tonnes)",
+      "scale": {"zero": false, "nice": true, "padding": 25},
+      "axis": {
+        "labelColor": "#660033",
+        "grid": true,
+        "gridColor": "#f2cce0",
+        "domain": true,
+        "domainColor": "#b30059",
+        "ticks": true,
+        "tickColor": "#b30059",
+        "titleColor": "#b30059",
+        "titlePadding": 8
+      }
+    },
+    "color": {
+      "field": "crop_type",
+      "type": "nominal",
+      "title": "Crop Type",
+      "scale": {"scheme": "set2"}
+    },
+    "size": {
+      "aggregate": "mean",
+      "field": "production",
+      "type": "quantitative",
+      "title": "Avg Production",
+      "scale": {"range": [150, 600]}
+    },
+    "tooltip": [
+      {"field": "state", "title": "State"},
+      {"field": "crop_type", "title": "Crop Type"},
+      {"field": "planted_area", "title": "Planted Area (ha)", "format": ",.0f"},
+      {"field": "production", "title": "Production (t)", "format": ",.0f"}
+    ]
+  },
+  "config": {
+    "background": "#ffffff",
+    "view": {"stroke": "transparent"},
+    "title": {"font": "Segoe UI"},
+    "legend": {"titleColor": "#b30059", "labelFont": "Segoe UI"}
+  }
+}
