@@ -1,0 +1,78 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "title": {
+    "text": "Production Trends for Major Crops (2017–2022)",
+    "fontSize": 18,
+    "fontWeight": "bold",
+    "anchor": "start",
+    "color": "#b30059"
+  },
+  "width": 180,
+  "height": 140,
+  "data": {
+    "url": "https://raw.githubusercontent.com/abon0028/DV2_FoodProductionMalaysia-/main/crops_state.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"calculate": "year(datum.date)", "as": "Year"},
+    {"filter": "datum.Year >= 2017 && datum.Year <= 2022"},
+    {
+      "aggregate": [
+        {"op": "sum", "field": "production", "as": "TotalProduction"}
+      ],
+      "groupby": ["Year", "crop_type"]
+    }
+  ],
+  "mark": {
+    "type": "line",
+    "interpolate": "monotone",
+    "strokeWidth": 2,
+    "point": {"filled": true, "size": 40, "opacity": 0.8}
+  },
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "ordinal",
+      "title": "Year",
+      "axis": {"labelColor": "#660033", "titleColor": "#b30059"}
+    },
+    "y": {
+      "field": "TotalProduction",
+      "type": "quantitative",
+      "title": "Production (Metric Tonnes)",
+      "axis": {
+        "labelColor": "#660033",
+        "titleColor": "#b30059",
+        "grid": true,
+        "gridColor": "#f2cce0"
+      }
+    },
+    "color": {
+      "field": "crop_type",
+      "type": "nominal",
+      "title": "Crop Type",
+      "scale": {"scheme": "set2"},
+      "legend": null
+    },
+    "facet": {
+      "field": "crop_type",
+      "type": "nominal",
+      "title": "Crop Type",
+      "columns": 3
+    },
+    "tooltip": [
+      {"field": "crop_type", "title": "Crop"},
+      {"field": "Year", "title": "Year"},
+      {"field": "TotalProduction", "title": "Production (t)", "format": ",.0f"}
+    ]
+  },
+  "resolve": {"scale": {"y": "independent"}},
+  "config": {
+    "background": "#ffffff",
+    "view": {"stroke": "transparent"},
+    "facet": {"spacing": 15},
+    "title": {"font": "Segoe UI"},
+    "axis": {"labelFont": "Segoe UI", "titleFont": "Segoe UI"},
+    "legend": {"titleColor": "#b30059", "labelFont": "Segoe UI"}
+  }
+}
