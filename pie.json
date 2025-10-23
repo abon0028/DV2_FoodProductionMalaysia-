@@ -1,0 +1,92 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "title": {
+    "text": "Crop Share of Total Production (2022)",
+    "fontSize": 18,
+    "fontWeight": "bold",
+    "anchor": "start",
+    "color": "#b30059"
+  },
+  "width": 500,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/abon0028/DV2_FoodProductionMalaysia-/main/crops_state.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"calculate": "year(datum.date)", "as": "Year"},
+    {"filter": "datum.Year == 2022"},
+    {
+      "aggregate": [
+        {"op": "sum", "field": "production", "as": "TotalProduction"}
+      ],
+      "groupby": ["crop_type"]
+    },
+    {"window": [{"op": "sum", "field": "TotalProduction", "as": "GrandTotal"}]},
+    {
+      "calculate": "datum.TotalProduction / datum.GrandTotal * 100",
+      "as": "PercentShare"
+    },
+    {"filter": "datum.PercentShare > 0"}
+  ],
+  "mark": {"type": "arc", "stroke": "#fff", "strokeWidth": 1},
+  "encoding": {
+    "theta": {
+      "field": "TotalProduction",
+      "type": "quantitative",
+      "title": "Total Production (t)"
+    },
+    "color": {
+      "field": "crop_type",
+      "type": "nominal",
+      "title": "Crop Type",
+      "scale": {"scheme": "set2"}
+    },
+    "tooltip": [
+      {"field": "crop_type", "title": "Crop Type"},
+      {"field": "TotalProduction", "title": "Production (t)", "format": ",.0f"},
+      {"field": "PercentShare", "title": "Share (%)", "format": ".1f"}
+    ]
+  },
+  "layer": [
+    {
+      "mark": {"type": "arc", "stroke": "#fff", "strokeWidth": 1},
+      "encoding": {
+        "theta": {"field": "TotalProduction", "type": "quantitative"},
+        "color": {
+          "field": "crop_type",
+          "type": "nominal",
+          "scale": {"scheme": "set2"}
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "radiusOffset": 20,
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#660033"
+      },
+      "encoding": {
+        "text": {
+          "field": "PercentShare",
+          "type": "quantitative",
+          "format": ".1f"
+        },
+        "theta": {"field": "TotalProduction", "type": "quantitative"},
+        "color": {"value": "black"}
+      }
+    }
+  ],
+  "view": {"stroke": "transparent"},
+  "config": {
+    "background": "#ffffff",
+    "title": {"font": "Segoe UI"},
+    "legend": {
+      "titleColor": "#b30059",
+      "labelFont": "Segoe UI",
+      "symbolType": "circle"
+    }
+  }
+}
