@@ -16,14 +16,14 @@
   <style>
     body {
       font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-      background: #fafafa;
+      background: #ffe6f0; /* soft pink background */
       color: #111;
       margin: 0;
       padding: 0;
     }
 
     header {
-      background-color: #004d26;
+      background-color: #cc3366; /* rich pink header */
       color: white;
       padding: 25px;
       text-align: center;
@@ -48,29 +48,35 @@
 
     section {
       background: white;
-      padding: 18px;
+      padding: 20px;
       margin-bottom: 50px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-top: 5px solid #ff80ab; /* pink accent line */
     }
 
     h2 {
       margin-top: 0;
-      color: #004d26;
+      color: #b30059; /* deep pink text */
     }
 
     footer {
       text-align: center;
       padding: 20px;
       font-size: 0.85rem;
-      color: #666;
-      border-top: 1px solid #ccc;
-      margin-top: 40px;
+      color: #660033;
+      border-top: 2px solid #ff80ab;
+      background-color: #ffd9e6;
     }
 
     .chart {
       width: 100%;
       height: 500px;
+    }
+
+    /* Slider style tweak */
+    input[type="range"] {
+      accent-color: #b30059;
     }
   </style>
 </head>
@@ -83,7 +89,7 @@
 
   <main>
     <section>
-      <h2>1. Crop Production by Country (2022)</h2>
+      <h2>1. Crop Production by State (2022)</h2>
       <div id="map" class="chart"></div>
     </section>
 
@@ -106,6 +112,12 @@
       <h2>5. Production Trends for Major Crops (2017–2022)</h2>
       <div id="multiline" class="chart"></div>
     </section>
+
+    <section>
+      <h2>6. Global Food Import Dependency Map (2000–2021)</h2>
+      <p>Use the slider to explore how food import dependency has evolved globally between 2000 and 2021.</p>
+      <div id="importmap" class="chart"></div>
+    </section>
   </main>
 
   <footer>
@@ -121,6 +133,7 @@
     vegaEmbed('#stackedbar', base + 'stackedbar.json', { actions: false }).catch(console.error);
     vegaEmbed('#scatter', base + 'scatter.json', { actions: false }).catch(console.error);
     vegaEmbed('#multiline', base + 'multiline.json', { actions: false }).catch(console.error);
+    vegaEmbed('#importmap', base + 'import_map.json', { actions: false }).catch(console.error);
   </script>
 </body>
 </html>
