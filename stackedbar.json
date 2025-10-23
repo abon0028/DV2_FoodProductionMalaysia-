@@ -1,0 +1,60 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "title": {
+    "text": "Crop Composition by State in Malaysia (2022)",
+    "fontSize": 18,
+    "fontWeight": "bold",
+    "anchor": "start",
+    "color": "#b30059"
+  },
+  "width": "container",
+  "height": 500,
+  "data": {
+    "url": "https://raw.githubusercontent.com/abon0028/DV2_FoodProductionMalaysia-/main/crops_state.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"calculate": "year(datum.date)", "as": "Year"},
+    {"filter": "datum.Year == 2022"}
+  ],
+  "mark": {"type": "bar", "tooltip": true},
+  "encoding": {
+    "x": {
+      "field": "state",
+      "type": "nominal",
+      "title": "State",
+      "axis": {"labelAngle": -45, "labelColor": "#660033"}
+    },
+    "y": {
+      "aggregate": "sum",
+      "field": "production",
+      "type": "quantitative",
+      "title": "Total Production (Metric Tonnes)",
+      "stack": "zero",
+      "axis": {"labelColor": "#660033"}
+    },
+    "color": {
+      "field": "crop_type",
+      "type": "nominal",
+      "title": "Crop Type",
+      "scale": {"scheme": "set2"}
+    },
+    "tooltip": [
+      {"field": "state", "title": "State"},
+      {"field": "crop_type", "title": "Crop Type"},
+      {
+        "aggregate": "sum",
+        "field": "production",
+        "title": "Production (t)",
+        "format": ",.0f"
+      }
+    ]
+  },
+  "config": {
+    "background": "#ffffff",
+    "view": {"stroke": "transparent"},
+    "title": {"font": "Segoe UI"},
+    "axis": {"titleColor": "#b30059", "labelFont": "Segoe UI"},
+    "legend": {"titleColor": "#b30059", "labelFont": "Segoe UI"}
+  }
+}
