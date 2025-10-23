@@ -1,0 +1,109 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Crop Production Share by Type (2022)",
+    "fontSize": 18,
+    "fontWeight": "bold",
+    "anchor": "start",
+    "color": "#b30059"
+  },
+  "width": 900,
+  "height": 420,
+  "data": {
+    "url": "https://raw.githubusercontent.com/abon0028/DV2_FoodProductionMalaysia-/main/crops_state.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"calculate": "year(datum.date)", "as": "Year"},
+    {"filter": "datum.Year == 2022"},
+    {
+      "aggregate": [
+        {"op": "sum", "field": "production", "as": "TotalProduction"}
+      ],
+      "groupby": ["crop_type"]
+    },
+    {"window": [{"op": "sum", "field": "TotalProduction", "as": "GrandTotal"}]},
+    {
+      "calculate": "100 * datum.TotalProduction / datum.GrandTotal",
+      "as": "SharePct"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadiusTopLeft": 4,
+        "cornerRadiusTopRight": 4
+      },
+      "encoding": {
+        "y": {
+          "field": "crop_type",
+          "type": "nominal",
+          "title": "Crop Type",
+          "sort": "-x",
+          "axis": {"labelColor": "#660033"}
+        },
+        "x": {
+          "field": "SharePct",
+          "type": "quantitative",
+          "title": "Share of Total Production (%)",
+          "scale": {"type": "sqrt", "nice": false},
+          "axis": {"labelColor": "#660033"}
+        },
+        "color": {
+          "field": "crop_type",
+          "type": "nominal",
+          "title": "Crop Type",
+          "scale": {
+            "range": [
+              "#f28cb1",
+              "#fbc2d9",
+              "#c1b2ff",
+              "#f7a6c1",
+              "#b2e3b0",
+              "#ffc972",
+              "#a7d8de",
+              "#ffdf8a",
+              "#d6c9ff"
+            ]
+          },
+          "legend": {"columns": 2}
+        },
+        "tooltip": [
+          {"field": "crop_type", "title": "Crop Type"},
+          {"field": "SharePct", "title": "Share (%)", "format": ".2f"},
+          {
+            "field": "TotalProduction",
+            "title": "Production (t)",
+            "format": ",.0f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 4,
+        "fontSize": 11,
+        "color": "#4b0033"
+      },
+      "encoding": {
+        "y": {"field": "crop_type", "type": "nominal", "sort": "-x"},
+        "x": {
+          "field": "SharePct",
+          "type": "quantitative",
+          "scale": {"type": "sqrt", "nice": false}
+        },
+        "text": {"field": "SharePct", "type": "quantitative", "format": ".2f"}
+      }
+    }
+  ],
+  "config": {
+    "background": "#ffffff",
+    "axis": {"labelFont": "Segoe UI", "titleFont": "Segoe UI"},
+    "title": {"font": "Segoe UI"},
+    "legend": {"titleColor": "#b30059", "labelFont": "Segoe UI"},
+    "view": {"stroke": "transparent"}
+  }
+}
