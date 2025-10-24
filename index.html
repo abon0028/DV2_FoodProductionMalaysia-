@@ -10,8 +10,6 @@
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-  <link rel="stylesheet" href="style.css" />
-
   <style>
     body {
       font-family: 'Segoe UI', Roboto, Arial, sans-serif;
@@ -30,51 +28,90 @@
 
     header h1 {
       margin: 0;
-      font-size: 1.9rem;
+      font-size: 2rem;
+      letter-spacing: 0.5px;
     }
 
     header p {
-      margin: 6px 0 0;
+      margin: 8px 0 0;
       font-size: 1rem;
       opacity: 0.9;
     }
 
     main {
-      max-width: 1000px;
+      max-width: 1150px;
       margin: 40px auto;
       padding: 0 20px;
     }
 
+    /* 🔹 Fixed chart section boxes */
     section {
       background: white;
-      padding: 20px;
+      padding: 25px 30px 35px;
       margin-bottom: 50px;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      border-top: 5px solid #ff80ab;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border-top: 6px solid #ff80ab;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    section:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
     }
 
     h2 {
       margin-top: 0;
       color: #b30059;
+      font-size: 1.35rem;
     }
 
     footer {
       text-align: center;
-      padding: 20px;
-      font-size: 0.85rem;
+      padding: 25px;
+      font-size: 0.9rem;
       color: #660033;
       border-top: 2px solid #ff80ab;
       background-color: #ffd9e6;
     }
 
+    /* 🔹 Chart containers — consistent sizing */
     .chart {
       width: 100%;
-      height: 500px;
+      height: 520px;
+      margin-top: 10px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    #map {
+      height: 620px; /* give map extra space */
+    }
+
+    /* 🔹 Smooth scrollbar look for long pages */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #ff80ab;
+      border-radius: 4px;
     }
 
     input[type="range"] {
       accent-color: #b30059;
+    }
+
+    /* 🔹 Responsive fix */
+    @media (max-width: 768px) {
+      main {
+        padding: 0 10px;
+      }
+      section {
+        padding: 20px;
+      }
+      .chart {
+        height: 400px;
+      }
     }
   </style>
 </head>
@@ -87,45 +124,44 @@
 
   <main>
     <section>
-      <h2>1. Crop Production by State (2022)</h2>
+      <h2>1. Crop Production by State (2017–2022)</h2>
+      <p>This choropleth map visualises total crop production across Malaysian states between 2017 and 2022, highlighting areas with the highest agricultural outputs.</p>
       <div id="map" class="chart"></div>
     </section>
 
     <section>
       <h2>2. Malaysia’s Food Import Dependency (2000–2021)</h2>
+      <p>Trends in Malaysia’s dependency on food imports, showing how reliance has changed over two decades.</p>
       <div id="line" class="chart"></div>
     </section>
 
     <section>
       <h2>3. Crop Composition by State (2022)</h2>
+      <p>This stacked bar chart compares the distribution of major crop types across each state in 2022.</p>
       <div id="stackedbar" class="chart"></div>
     </section>
 
     <section>
       <h2>4. Crop Efficiency: Planted Area vs Production</h2>
+      <p>The scatter plot below compares crop efficiency based on planted area and yield, showing which crops deliver the best productivity per hectare.</p>
       <div id="scatter" class="chart"></div>
     </section>
 
     <section>
       <h2>5. Production Trends for Major Crops (2017–2022)</h2>
+      <p>This multi-line chart shows annual production trends for Malaysia’s major crops between 2017 and 2022.</p>
       <div id="multiline" class="chart"></div>
     </section>
 
     <section>
-      <h2>6. Global Food Import Dependency Map (2000–2021)</h2>
-      <div id="importmap" class="chart"></div>
-    </section>
-
-    <!-- 🌾 New horizontal bar chart section -->
-    <section>
-      <h2>7. Crop Share of Total Production (2022)</h2>
-      <p>This horizontal bar chart shows Malaysia’s crop types ranked by their share of total production in 2022, using a √ scale for better visibility of smaller crops.</p>
+      <h2>6. Crop Share of Total Production (2022)</h2>
+      <p>This horizontal bar chart ranks crops by their share of total production, using a √ scale for better visibility of smaller crops.</p>
       <div id="bar" class="chart"></div>
     </section>
 
     <section>
-      <h2>8. Malaysia’s Total Crop Production Over Time (2017–2022)</h2>
-      <p>This area chart shows how Malaysia’s total agricultural production has evolved in recent years.</p>
+      <h2>7. Malaysia’s Total Crop Production Over Time (2017–2022)</h2>
+      <p>This area chart shows the overall growth and fluctuations in Malaysia’s total agricultural production over time.</p>
       <div id="area" class="chart"></div>
     </section>
   </main>
@@ -137,14 +173,13 @@
   <script>
     const base = "https://raw.githubusercontent.com/abon0028/DV2_FoodProductionMalaysia-/main/";
 
-    vegaEmbed('#map', base + 'map.json', { actions: false }).catch(console.error);
-    vegaEmbed('#line', base + 'line.json', { actions: false }).catch(console.error);
-    vegaEmbed('#stackedbar', base + 'stackedbar.json', { actions: false }).catch(console.error);
-    vegaEmbed('#scatter', base + 'scatter.json', { actions: false }).catch(console.error);
-    vegaEmbed('#multiline', base + 'multiline.json', { actions: false }).catch(console.error);
-    vegaEmbed('#importmap', base + 'import_map.json', { actions: false }).catch(console.error);
-    vegaEmbed('#bar', base + 'horizontal_bar.json', { actions: false }).catch(console.error);
-    vegaEmbed('#area', base + 'area.json', { actions: false }).catch(console.error);
+    vegaEmbed('#map', base + 'map.json', { actions: false, renderer: 'canvas' }).catch(console.error);
+    vegaEmbed('#line', base + 'line.json', { actions: false, renderer: 'canvas' }).catch(console.error);
+    vegaEmbed('#stackedbar', base + 'stackedbar.json', { actions: false, renderer: 'canvas' }).catch(console.error);
+    vegaEmbed('#scatter', base + 'scatter.json', { actions: false, renderer: 'canvas' }).catch(console.error);
+    vegaEmbed('#multiline', base + 'multiline.json', { actions: false, renderer: 'canvas' }).catch(console.error);
+    vegaEmbed('#bar', base + 'horizontal_bar.json', { actions: false, renderer: 'canvas' }).catch(console.error);
+    vegaEmbed('#area', base + 'area.json', { actions: false, renderer: 'canvas' }).catch(console.error);
   </script>
 </body>
 </html>
