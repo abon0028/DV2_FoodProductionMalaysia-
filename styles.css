@@ -1,0 +1,156 @@
+body {
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  background: #ffe6f0;
+  color: #111;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+header {
+  background-color: #cc3366;
+  color: white;
+  padding: 25px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+}
+
+header p {
+  margin: 8px 0 0;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+main {
+  max-width: 1400px;
+  margin: 40px auto;
+  padding: 0 40px;
+}
+section {
+  background: white;
+  padding: 45px 45px 55px;
+  margin-bottom: 65px;
+  border-radius: 25px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+  border-top: 8px solid #ff80ab;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+}
+
+h2 {
+  margin-top: 0;
+  color: #b30059;
+  font-size: 1.6rem;
+}
+
+p {
+  margin-top: 8px;
+  margin-bottom: 25px;
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: 1000px;
+  text-align: center;
+}
+.chart {
+  width: 100%;
+  max-width: 1200px;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+#map {
+  height: 780px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 15px 0;
+}
+
+#stackedbar {
+  height: 720px;
+  overflow-x: auto;
+}
+
+#scatter {
+  height: 720px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#multiline {
+  height: 750px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#line, #bar, #area {
+  height: 600px;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  font-size: 0.9rem;
+  color: #660033;
+  border-top: 2px solid #ff80ab;
+  background-color: #ffd9e6;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #ff80ab;
+  border-radius: 4px;
+}
+
+input[type="range"] {
+  accent-color: #b30059;
+}
+
+@media (max-width: 1024px) {
+  main {
+    padding: 0 20px;
+  }
+  section {
+    padding: 25px;
+  }
+  .chart {
+    height: 500px;
+  }
+  #map, #stackedbar, #scatter, #multiline {
+    height: 550px;
+  }
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 20px;
+  }
+  .chart {
+    height: 450px;
+  }
+  #map, #stackedbar, #scatter, #multiline {
+    height: 500px;
+  }
+}
