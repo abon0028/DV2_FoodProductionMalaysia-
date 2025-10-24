@@ -1,112 +1,82 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Global Food Import Dependency (2000–2021)",
-    "fontSize": 18,
+    "text": "Total Crop Production by State in Malaysia (2017–2022)",
+    "subtitle": "Source: Department of Agriculture Malaysia | Data: total_production.csv",
+    "font": "Segoe UI",
+    "fontSize": 22,
     "fontWeight": "bold",
+    "color": "#004d26",
+    "subtitleFont": "Segoe UI",
+    "subtitleFontSize": 13,
+    "subtitleColor": "#006400",
     "anchor": "start"
   },
-  "width": 950,
-  "height": 520,
-  "projection": {"type": "equalEarth"},
-  "params": [
+
+  "width": 1150,
+  "height": 850,
+  "projection": {
+    "type": "mercator",
+    "center": [108, 5],         
+    "scale": 3400,               
+    "translate": [550, 600]      
+  },
+
+  "layer": [
     {
-      "name": "selected_year",
-      "value": 2021,
-      "bind": {
-        "input": "range",
-        "min": 2000,
-        "max": 2021,
-        "step": 1,
-        "name": "Select Year: "
+      "data": { "graticule": true },
+      "mark": { "type": "geoshape", "stroke": "#e0e0e0", "strokeWidth": 0.5 }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/abon0028/DV2_FoodProductionMalaysia-/refs/heads/main/my.json",
+        "format": { "type": "json", "property": "features" }
+      },
+      "transform": [
+        {
+          "lookup": "properties.name",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/abon0028/DV2_FoodProductionMalaysia-/refs/heads/main/total_production.csv",
+              "format": { "type": "csv" }
+            },
+            "key": "State",
+            "fields": ["Total Production (tonnes)"]
+          }
+        },
+        {
+          "calculate": "toNumber(datum['Total Production (tonnes)'])",
+          "as": "total_production"
+        }
+      ],
+      "mark": { "type": "geoshape", "stroke": "#ffffff", "strokeWidth": 0.8 },
+      "encoding": {
+        "color": {
+          "field": "total_production",
+          "type": "quantitative",
+          "title": "Total Production (tonnes)",
+          "scale": {
+            "scheme": "greens",
+            "domain": [0, 6000000]
+          }
+        },
+        "tooltip": [
+          { "field": "properties.name", "title": "State" },
+          { "field": "total_production", "title": "Total Production (tonnes)", "format": ",.0f" }
+        ]
       }
     }
   ],
-  "data": {
-    "url": "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json",
-    "format": {"type": "topojson", "feature": "countries"}
-  },
-  "transform": [
-    {
-      "lookup": "properties.name",
-      "from": {
-        "data": {
-          "url": "https://raw.githubusercontent.com/abon0028/DV2_FoodProductionMalaysia-/main/API_TM.VAL.FOOD.ZS.UN_DS2_en_csv_v2_14837.csv",
-          "format": {"type": "csv"}
-        },
-        "key": "Country Name",
-        "fields": [
-          "2000",
-          "2001",
-          "2002",
-          "2003",
-          "2004",
-          "2005",
-          "2006",
-          "2007",
-          "2008",
-          "2009",
-          "2010",
-          "2011",
-          "2012",
-          "2013",
-          "2014",
-          "2015",
-          "2016",
-          "2017",
-          "2018",
-          "2019",
-          "2020",
-          "2021"
-        ]
-      },
-      "as": [
-        "2000",
-        "2001",
-        "2002",
-        "2003",
-        "2004",
-        "2005",
-        "2006",
-        "2007",
-        "2008",
-        "2009",
-        "2010",
-        "2011",
-        "2012",
-        "2013",
-        "2014",
-        "2015",
-        "2016",
-        "2017",
-        "2018",
-        "2019",
-        "2020",
-        "2021"
-      ]
-    },
-    {
-      "calculate": "toNumber(datum[toString(selected_year)])",
-      "as": "ImportValue"
-    }
-  ],
-  "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
-  "encoding": {
-    "color": {
-      "field": "ImportValue",
-      "type": "quantitative",
-      "title": "Food Imports (% of Merchandise Imports)",
-      "scale": {"scheme": "cividis"}
-    },
-    "tooltip": [
-      {"field": "properties.name", "title": "Country"},
-      {"field": "ImportValue", "title": "Food Imports (%)", "format": ".2f"},
-      {"param": "selected_year", "title": "Year"}
-    ]
-  },
+
   "config": {
-    "background": "#ffffff",
-    "view": {"stroke": "transparent"},
-    "title": {"fontSize": 18, "font": "Segoe UI"}
+    "background": "#fafafa",
+    "view": { "stroke": "transparent" },
+    "legend": {
+      "titleFont": "Segoe UI",
+      "labelFont": "Segoe UI",
+      "titleFontSize": 14,
+      "labelFontSize": 12,
+      "gradientLength": 220
+    }
   }
 }
