@@ -1,0 +1,119 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Global Food Import Dependency (2000–2021)",
+    "subtitle": "Percentage of merchandise imports that are food-related, 2000–2021",
+    "font": "Segoe UI",
+    "fontSize": 22,
+    "fontWeight": "bold",
+    "color": "#7a003c",
+    "subtitleFont": "Segoe UI",
+    "subtitleFontSize": 13,
+    "subtitleColor": "#4a0033",
+    "anchor": "start",
+    "offset": 10
+  },
+  "width": 1050,
+  "height": 560,
+  "projection": {"type": "equalEarth"},
+  "params": [
+    {
+      "name": "selected_year",
+      "value": 2021,
+      "bind": {
+        "input": "range",
+        "min": 2000,
+        "max": 2021,
+        "step": 1,
+        "name": "Select Year → "
+      }
+    }
+  ],
+  "layer": [
+    {
+      "data": {"graticule": true},
+      "mark": {"type": "geoshape", "stroke": "#dcdcdc", "strokeWidth": 0.5}
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries-sans-antarctica.json",
+        "format": {"type": "topojson", "feature": "countries"}
+      },
+      "transform": [
+        {
+          "lookup": "properties.ISO_A3",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/abon0028/DV2_FoodProductionMalaysia-/main/API_TM.VAL.FOOD.ZS.UN_DS2_en_csv_v2_14837.csv",
+              "format": {"type": "csv"}
+            },
+            "key": "Country Code",
+            "fields": [
+              "2000",
+              "2001",
+              "2002",
+              "2003",
+              "2004",
+              "2005",
+              "2006",
+              "2007",
+              "2008",
+              "2009",
+              "2010",
+              "2011",
+              "2012",
+              "2013",
+              "2014",
+              "2015",
+              "2016",
+              "2017",
+              "2018",
+              "2019",
+              "2020",
+              "2021",
+              "Country Name"
+            ]
+          }
+        },
+        {
+          "calculate": "toNumber(datum[toString(selected_year)])",
+          "as": "ImportValue"
+        }
+      ],
+      "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.4},
+      "encoding": {
+        "color": {
+          "field": "ImportValue",
+          "type": "quantitative",
+          "title": "Food Imports (% of Merchandise Imports)",
+          "scale": {
+            "domain": [0, 50],
+            "range": ["#f7fcf0", "#7fcdbb", "#2c7fb8", "#084081"]
+          }
+        },
+        "tooltip": [
+          {"field": "Country Name", "title": "Country"},
+          {
+            "field": "ImportValue",
+            "title": "Food Imports (%)",
+            "format": ".2f"
+          },
+          {"param": "selected_year", "title": "Year"}
+        ]
+      }
+    }
+  ],
+  "config": {
+    "background": "#ffffff",
+    "view": {"stroke": "transparent"},
+    "legend": {
+      "titleColor": "#7a003c",
+      "labelColor": "#4b0033",
+      "titleFont": "Segoe UI",
+      "labelFont": "Segoe UI",
+      "titleFontSize": 13,
+      "labelFontSize": 11,
+      "gradientLength": 180
+    }
+  }
+}
