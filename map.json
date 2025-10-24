@@ -4,28 +4,34 @@
     "text": "Total Crop Production by State in Malaysia (2017–2022)",
     "subtitle": "Source: Department of Agriculture Malaysia | Data: total_production.csv",
     "font": "Segoe UI",
-    "fontSize": 22,
+    "fontSize": 20,
     "fontWeight": "bold",
-    "color": "#004d26",
+    "color": "#2c004d",
     "subtitleFont": "Segoe UI",
     "subtitleFontSize": 13,
-    "subtitleColor": "#006400",
-    "anchor": "start"
+    "subtitleColor": "#6534af",
+    "anchor": "start",
+    "offset": 10
   },
 
-  "width": 1150,
-  "height": 850,
+  "width": 1000,
+  "height": 600,
+
   "projection": {
     "type": "mercator",
-    "center": [108, 5],         
-    "scale": 3400,               
-    "translate": [550, 600]      
+    "center": [109.5, 4.5],
+    "scale": 2600,
+    "translate": [500, 350]
   },
 
   "layer": [
     {
       "data": { "graticule": true },
-      "mark": { "type": "geoshape", "stroke": "#e0e0e0", "strokeWidth": 0.5 }
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#e0e0e0",
+        "strokeWidth": 0.5
+      }
     },
     {
       "data": {
@@ -49,34 +55,46 @@
           "as": "total_production"
         }
       ],
-      "mark": { "type": "geoshape", "stroke": "#ffffff", "strokeWidth": 0.8 },
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#ffffff",
+        "strokeWidth": 0.7
+      },
       "encoding": {
         "color": {
           "field": "total_production",
           "type": "quantitative",
           "title": "Total Production (tonnes)",
           "scale": {
-            "scheme": "greens",
+            "scheme": "purpleblue",
             "domain": [0, 6000000]
+          },
+          "legend": {
+            "orient": "right",
+            "offset": -80,         // ✅ moves legend left
+            "titleFont": "Segoe UI",
+            "labelFont": "Segoe UI",
+            "titleFontSize": 14,
+            "labelFontSize": 12,
+            "gradientLength": 220,
+            "titleColor": "#2c004d",
+            "labelColor": "#2c004d"
           }
         },
         "tooltip": [
           { "field": "properties.name", "title": "State" },
-          { "field": "total_production", "title": "Total Production (tonnes)", "format": ",.0f" }
+          {
+            "field": "total_production",
+            "title": "Total Production (tonnes)",
+            "format": ",.0f"
+          }
         ]
       }
     }
   ],
 
   "config": {
-    "background": "#fafafa",
-    "view": { "stroke": "transparent" },
-    "legend": {
-      "titleFont": "Segoe UI",
-      "labelFont": "Segoe UI",
-      "titleFontSize": 14,
-      "labelFontSize": 12,
-      "gradientLength": 220
-    }
+    "background": "#dbc2f3",
+    "view": { "stroke": "transparent" }
   }
 }
