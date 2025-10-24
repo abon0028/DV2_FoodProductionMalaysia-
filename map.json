@@ -71,7 +71,7 @@
           },
           "legend": {
             "orient": "right",
-            "offset": -80,         // ✅ moves legend left
+            "offset": -80,         
             "titleFont": "Segoe UI",
             "labelFont": "Segoe UI",
             "titleFontSize": 14,
