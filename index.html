@@ -39,31 +39,44 @@
     }
 
     main {
-      max-width: 1150px;
+      max-width: 1400px;
       margin: 40px auto;
-      padding: 0 20px;
+      padding: 0 40px;
     }
 
-    /* 🔹 Fixed chart section boxes */
+    /* 🔹 Bigger boxes to fit all charts */
     section {
       background: white;
-      padding: 25px 30px 35px;
-      margin-bottom: 50px;
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-      border-top: 6px solid #ff80ab;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      padding: 45px 45px 55px;
+      margin-bottom: 65px;
+      border-radius: 25px;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+      border-top: 8px solid #ff80ab;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
     }
 
     section:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
     }
 
     h2 {
       margin-top: 0;
       color: #b30059;
-      font-size: 1.35rem;
+      font-size: 1.6rem;
+    }
+
+    p {
+      margin-top: 8px;
+      margin-bottom: 25px;
+      font-size: 1rem;
+      line-height: 1.5;
+      max-width: 1000px;
+      text-align: center;
     }
 
     footer {
@@ -75,20 +88,57 @@
       background-color: #ffd9e6;
     }
 
-    /* 🔹 Chart containers — consistent sizing */
+    /* ✅ Chart container styles */
     .chart {
       width: 100%;
-      height: 520px;
-      margin-top: 10px;
-      border-radius: 12px;
+      max-width: 1200px;
+      border-radius: 18px;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
     }
 
+    /* 🗺️ Map fix */
     #map {
-      height: 620px; /* give map extra space */
+      height: 780px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      padding: 15px 0;
     }
 
-    /* 🔹 Smooth scrollbar look for long pages */
+    /* 📊 Stacked bar fix */
+    #stackedbar {
+      height: 720px;
+      overflow-x: auto;
+    }
+
+    /* ⚪ Scatterplot fix */
+    #scatter {
+      height: 720px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* 📈 Multiline fix */
+    #multiline {
+      height: 750px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Other charts (stable) */
+    #line, #bar, #area {
+      height: 600px;
+    }
+
+    /* 🔹 Smooth scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
     }
@@ -101,16 +151,31 @@
       accent-color: #b30059;
     }
 
-    /* 🔹 Responsive fix */
-    @media (max-width: 768px) {
+    /* 🔹 Responsive */
+    @media (max-width: 1024px) {
       main {
-        padding: 0 10px;
+        padding: 0 20px;
       }
+      section {
+        padding: 25px;
+      }
+      .chart {
+        height: 500px;
+      }
+      #map, #stackedbar, #scatter, #multiline {
+        height: 550px;
+      }
+    }
+
+    @media (max-width: 768px) {
       section {
         padding: 20px;
       }
       .chart {
-        height: 400px;
+        height: 450px;
+      }
+      #map, #stackedbar, #scatter, #multiline {
+        height: 500px;
       }
     }
   </style>
